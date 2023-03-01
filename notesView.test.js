@@ -12,7 +12,6 @@ beforeEach(() => {
   document.body.innerHTML = htmlString;
 });
 
-
 describe('NotesView class', () => {
   it('displays the list of notes', () => {
     const model = new NotesModel();

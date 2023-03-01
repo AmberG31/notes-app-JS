@@ -11,6 +11,7 @@ class NotesView {
     this.buttonEl.addEventListener('click', () => {
       const newNote = document.querySelector('#note-input').value 
       this.addNewNote(newNote);
+      document.querySelector("#note-input").value = " "; // empties the input box
     });
     this.resetBbutton.addEventListener('click', () => {
       this.resetNotes();
@@ -24,7 +25,7 @@ class NotesView {
   }
 
   displayNotes() {
-    console.log('This is an example note');
+    // console.log('This is an example note');
 
     document.querySelectorAll('.note').forEach(element => {
       element.remove();
@@ -44,7 +45,7 @@ class NotesView {
     console.log('Hide all notes.');
 
     const notesEl = document.querySelectorAll('.note');
-    notesEl.forEach(el => el.remove());  
+    notesEl.forEach(element => element.remove());  
   }
 };
 
