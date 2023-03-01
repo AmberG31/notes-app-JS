@@ -37,7 +37,7 @@ describe('NotesView class', () => {
 
     expect(document.querySelectorAll('div.note').length).toEqual(1);
     expect(document.querySelector('div.note').textContent).toEqual('Test: adding a note');
-  })
+  });
 
   it('displays the correct number of notes', () => {
     const model = new NotesModel();
@@ -50,5 +50,21 @@ describe('NotesView class', () => {
     view.displayNotes();
 
     expect(document.querySelectorAll('div.note').length).toBe(2)
-  })
+  });
+
+  it('resets the notes to blank', () => {
+    const model = new NotesModel();
+    const view = new NotesView(model);
+
+    const buttonEl = document.querySelector('#add-note');
+    const inputEl = document.querySelector('#note-input');
+
+    inputEl.value = 'Test: adding a note';
+    buttonEl.click();
+
+    const resetButton = document.querySelector('#reset-notes');
+    resetButton.click();
+
+    expect(document.querySelectorAll('div.note').length).toBeNull;
+  });
 });
