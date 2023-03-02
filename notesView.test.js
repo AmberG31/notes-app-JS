@@ -5,6 +5,7 @@
 const fs = require('fs');
 const NotesView = require("./notesView");
 const NotesModel = require("./notesModel");
+const NotesClient = require("./notesClient");
 const exp = require('constants');
 
 const htmlString = fs.readFileSync('./index.html');
@@ -12,10 +13,18 @@ beforeEach(() => {
   document.body.innerHTML = htmlString;
 });
 
+jest.mock('./notesClient')
+
+
 describe('NotesView class', () => {
+  beforeEach(() => {
+    NotesClient.mockClear();
+  });
+
   it('displays the list of notes', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model,client);
     model.addNote('This is first note');
     model.addNote('And this is a second note');
     
@@ -26,7 +35,8 @@ describe('NotesView class', () => {
 
   it('allows to add text, click the button and display the added note', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model,client);
 
     const buttonEl = document.querySelector('#add-note');
     const inputEl = document.querySelector('#note-input');
@@ -40,7 +50,8 @@ describe('NotesView class', () => {
 
   it('displays the correct number of notes', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model,client);
 
     model.addNote('First note');
     model.addNote('Second note');
@@ -53,7 +64,8 @@ describe('NotesView class', () => {
 
   it('resets the notes to blank', () => {
     const model = new NotesModel();
-    const view = new NotesView(model);
+    const client = new NotesClient();
+    const view = new NotesView(model,client);
 
     const buttonEl = document.querySelector('#add-note');
     const inputEl = document.querySelector('#note-input');
@@ -65,5 +77,18 @@ describe('NotesView class', () => {
     resetButton.click();
 
     expect(document.querySelectorAll('div.note').length).toBeNull;
+  });
+
+  // displayNotesFromApi
+  it('displays the notes from API', () => {
+    const model = new NotesModel();
+    const client = new NotesClient();
+
+    client.loadNotes.mockImplementation((callback) => callback(['Added a note']));
+    const view = new NotesView(model,client); 
+
+    view.displayNotesFromApi();
+    expect(document.querySelector('.note').textContent).toEqual('Added a note');
+
   });
 });

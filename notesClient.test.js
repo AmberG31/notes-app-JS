@@ -7,13 +7,11 @@ describe('NotesClient class', () => {
     const client = new NotesClient();
 
     fetch.mockResponseOnce(JSON.stringify({
-      name: 'Some value',
-      id: 123
+     name: ['This is first note']
     }));
 
-    client.loadData((returnedDataFromApi) => {
-      expect(returnedDataFromApi.name).toBe('Some value');
-      expect(returnedDataFromApi.id).toBe(123);
+    client.loadNotes((returnedDataFromApi) => {
+      expect(returnedDataFromApi.name).toEqual(['This is first note']);
       done();
     })
   });
