@@ -1,11 +1,12 @@
 class NotesClient {
-  loadNotes(callback) {
+  loadNotes(callback, errorCalback) {
     return fetch('http://localhost:3000/notes')
       .then((response) => response.json())
-      .then((data) => callback(data));
+      .then((data) => callback(data))
+      .catch((error) => errorCalback(error))
   };
 
-  createNote(note, callback) {
+  createNote(note, callback, errorCallback) {
     fetch('http://localhost:3000/notes', {
       method: 'POST',
       headers: {
@@ -17,6 +18,9 @@ class NotesClient {
     .then((notes) => { 
       callback(notes)
     })
+    .catch((error) => {
+      errorCallback(error);
+    });
   };
 }
 

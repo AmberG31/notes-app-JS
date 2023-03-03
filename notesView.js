@@ -37,8 +37,8 @@ class NotesView {
 
     notes.forEach(note => {
       const noteEl = document.createElement('div');
-      noteEl.textContent = note;
       noteEl.className = 'note';
+      noteEl.textContent = note;
       this.mainContainerEl.append(noteEl);
     });
   };
@@ -57,6 +57,13 @@ class NotesView {
       this.displayNotes();
     });
   };
+
+  displayError(error) {
+    const errorEl = document.createElement('div');
+    errorEl.className = 'error';
+    errorEl.textContent = 'Oopsy, something went wrong! ' + error;
+    this.mainContainerEl.append(errorEl);
+  }
 };
 
 module.exports = NotesView;

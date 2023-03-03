@@ -91,4 +91,15 @@ describe('NotesView class', () => {
     expect(document.querySelector('.note').textContent).toEqual('Added a note');
 
   });
+
+  it('displays an error if the notes can;t be displayed', () => {
+    const model = new NotesModel();
+    const client = new NotesClient();
+    const view = new NotesView(model,client);
+
+    view.displayError()
+
+    const errorEl = document.querySelectorAll('.error');
+    expect(errorEl[0].textContent).toContain('Oopsy, something went wrong!')
+  })
 });

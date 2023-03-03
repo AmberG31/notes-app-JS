@@ -20,7 +20,7 @@ describe('NotesClient class', () => {
     })
   });
 
-  it('checks if the correct methos is called', () => {
+  it('checks if the correct method is called', () => {
     const client = new NotesClient();
     fetch.mockResponseOnce(JSON.stringify(['1', '3']));
     client.createNote('This is a test note', (notes) => {
