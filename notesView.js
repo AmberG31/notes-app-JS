@@ -21,6 +21,7 @@ class NotesView {
   };
 
   addNewNote(newNote) {
+    console.log('displayNotes function is being called');
     this.model.addNote(newNote);
     this.displayNotes();
     console.log(newNote);
